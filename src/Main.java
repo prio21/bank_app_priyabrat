@@ -2,6 +2,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.String;
+import java.util.HashMap;
+
 public class Main { // for main to use as an obj we have created it as class
 
     BufferedReader buff;
@@ -15,6 +17,7 @@ public class Main { // for main to use as an obj we have created it as class
 
     int selectedBank, selectedOperation;
     
+
      RBI objbank = null; // not used Object class bcoz it is universal, RBI is an interface so can recognise the methods
     public static void main(String[] args) {
         Main obj = new Main(); // once initialise
@@ -74,7 +77,9 @@ public class Main { // for main to use as an obj we have created it as class
 
 
                         float deposit = Float.parseFloat(obj.buff.readLine());
+                        cus.balance += deposit;
                         obj.objbank.depositMoney(deposit);
+                        System.out.println("this is the customer class balance "+ cus.balance);
                     }
                     catch(IOException e){
                         throw  new RuntimeException();
@@ -84,6 +89,7 @@ public class Main { // for main to use as an obj we have created it as class
                 case 2 : System.out.println("how much you want to withdraw");
                     try {
                         float  withdraw = Float.parseFloat(obj.buff.readLine());
+                        cus.balance -= withdraw;
                         obj.objbank.withdrawMoney(withdraw);
                     }
                     catch(IOException e){
@@ -103,12 +109,18 @@ public class Main { // for main to use as an obj we have created it as class
                         throw  new RuntimeException();
                     }
                     break;
-                case 4 : System.out.println("how much you want to take a loan ");
+                case 4 : System.out.println("how much you want to take a loan, time in years, and type  ");
                     try{
-
+                        HashMap<Integer,String> map = new HashMap<>();
+                        map.put(1,"home loan");
+                        map.put(2,"education loan");
+                        map.put(3,"car loan");
+                        map.put(4,"personal loan");
                         float amount = Float.parseFloat(obj.buff.readLine());
                         int years = Integer.parseInt(obj.buff.readLine());
-                        obj.objbank.applyLoan("",amount, years);
+                        int type = Integer.parseInt(obj.buff.readLine());
+                        String loanType = map.get(type);
+                        obj.objbank.applyLoan(loanType,amount, years);
                     }catch(IOException e){
                         throw  new RuntimeException();
                     }

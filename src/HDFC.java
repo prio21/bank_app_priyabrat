@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 
 public class HDFC implements RBI{
 
@@ -8,6 +9,7 @@ public class HDFC implements RBI{
     BufferedReader buff;
     InputStreamReader isr;
 
+    HashMap<String,Float> map = new HashMap<>();
     float balance = 0.0f;
     int counter = 0;
 
@@ -56,14 +58,19 @@ public class HDFC implements RBI{
 
     @Override
     public void applyLoan(String loanType, float amount, int years) {
-        this.amount = amount;
+        map.put("home loan", 6.5F);
+        map.put("education loan", 4.5F);
+        map.put("car loan", 7.5F);
+        map.put("personal loan", 6.5F);
 
+
+        this.amount = amount;
         this.years = years;
         this.loan = amount;
         for (int i = 0; i < years; i++) {
-            amount = amount + (ROI / 100 * amount);
+            amount = amount + (map.get(loanType) / 100 * amount);
         }
-        System.out.println("Your interest on loan of " + loan);
+        System.out.println("Your interest on loan of " + loanType + "is:   ");
         System.out.println(amount - loan);
     }
 
