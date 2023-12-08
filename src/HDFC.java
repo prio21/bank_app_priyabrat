@@ -6,11 +6,15 @@ public class HDFC implements RBI{
 
 
 
+    // 8 - 12 - 2023 // the map implementation
+
+    HashMap<String,Float> cusMap = new HashMap<>(); // name of cus and the balance
+
     BufferedReader buff;
     InputStreamReader isr;
 
     HashMap<String,Float> map = new HashMap<>();
-    float balance = 0.0f;
+    float balance = 0.0f; // this is banks balance
     int counter = 0;
 
     float deposit = 0.0f;
