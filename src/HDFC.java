@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class HDFC implements RBI{
@@ -9,7 +10,8 @@ public class HDFC implements RBI{
     // 8 - 12 - 2023 // the map implementation
 
     HashMap<String,Float> cusMap = new HashMap<>(); // name of cus and the balance
-
+    ArrayList<Customer> cusList = new ArrayList<>();
+    ArrayList<String> cusListAdhar = new ArrayList<>();
     BufferedReader buff;
     InputStreamReader isr;
 
@@ -93,4 +95,32 @@ public class HDFC implements RBI{
     public float getBalance() {
         return balance;
     }
+    @Override
+    public void gettallcus() {
+        for(Customer element : cusList){
+            System.out.println(element.customerName);
+        }
+    }
+
+    @Override
+    public void setCus(Customer c) {
+
+        for(int i = 0 ; i<cusList.size(); i++) {
+            boolean flag = false;
+            Customer mCustomer = cusList.get(i);
+            if(mCustomer.getCustomerAadhar().equalsIgnoreCase(c.getCustomerAadhar())) { // adhar
+                flag=true;
+            }
+            if( !flag ) {
+                cusList.add(c);
+            }
+        }
+
+//        if(!cusList.contains(c.dgged) ){
+//            cusListAdhar.add(c.getCustomerAadhar());
+//            cusList.add(c);
+//        }
+
+    }
 }
+// array list --> customer //  cuslist.contains(c.)

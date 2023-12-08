@@ -1,9 +1,11 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public interface RBI {
 
+    ArrayList<Customer> cusList = new ArrayList<>();
     float balance = 0.0f;
     int counter = 0;
 
@@ -13,6 +15,7 @@ public interface RBI {
     float amount = 0.0f;
     float ROI = 1.0f;
     int years = 0;
+
 
 //    float loanamount = 0.0f;
 //    float loanROI = 0.0f;
@@ -36,4 +39,7 @@ public interface RBI {
     void applyCreditCard();
 
     float getBalance();
+
+    void gettallcus();
+    void setCus(Customer c);
 }

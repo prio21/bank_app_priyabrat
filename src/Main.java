@@ -5,7 +5,7 @@ import java.lang.String;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Main { // for main to use as an obj we have created it as class
+public class Main implements  Runnable { // for main to use as an obj we have created it as class
 
 
     ArrayList<Customer> cusArray = new ArrayList<>();
@@ -22,13 +22,28 @@ public class Main { // for main to use as an obj we have created it as class
     
 
      RBI objbank = null; // not used Object class bcoz it is universal, RBI is an interface so can recognise the methods
+
+
+
+//    public static void main(String[] args) {
+//        Main obj = new Main(); // once initialise
+//
+//
+//
+
+    Main obj = null;  // instaNCE BANAKEN USE KRA HAI
+
     public static void main(String[] args) {
-        Main obj = new Main(); // once initialise
+        Main obj1 = new Main();
+        obj1.obj = obj1.getInstance(obj1);
+        Thread mainThread = new Thread(obj1);
+        mainThread.start();
+    }
 
-
-
-
-
+    public Main getInstance(Main obj) {
+        return obj;
+    }
+    public void run(){
 
 
 
@@ -48,6 +63,17 @@ public class Main { // for main to use as an obj we have created it as class
             throw new RuntimeException(e);
         }
         cus.setCustomerName(cus.customerName);
+
+        System.out.println("Enter your adhar note: adhar should be unique"); // for the primary key
+
+        try {
+            cus.customerAadhar = obj.buff.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        cus.setCustomerName(cus.customerAadhar);
+
+
         boolean bl = true;
         boolean newcus = false; // check if the new cus or old
         while(bl){
@@ -62,6 +88,17 @@ public class Main { // for main to use as an obj we have created it as class
                     throw new RuntimeException(e);
                 }
                 cus.setCustomerName(cus.customerName);
+
+                System.out.println("Enter your adhar note: adhar should be unique"); // for the primary key
+
+                try {
+                    cus.customerAadhar = obj.buff.readLine();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                cus.setCustomerName(cus.customerAadhar);
+
+
             }
 
             // this is the case for selecting the bank
@@ -79,16 +116,34 @@ public class Main { // for main to use as an obj we have created it as class
 
                 case 1 : obj.objbank   = new ICICI(obj.buff,obj.isr); //obj.objbankl is used cause it is non static so using main class obj
                     cus.customerBankAndBalance.put("ICICI",0F);
+
+
+                    obj.objbank.setCus(cus);
                     break;
 
                 case 2: obj.objbank = new HDFC(obj.buff,obj.isr);
                     cus.customerBankAndBalance.put("HDFC",0F);
+                    obj.objbank.setCus(cus);
                     break;
                 case 7: System.out.println("total customer available currently is : " + obj.cusArray.size());
                     break;
             }
 
 
+            // if the user wants to have a look on how many people have an acc in the bank
+
+            System.out.println("do you want to see how many people have acc on a particular bank ? ");
+            int accOnBank;
+            try {
+                 accOnBank = Integer.parseInt(obj.buff.readLine());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            if(accOnBank == 1) {
+                System.out.println("the total customer of this bank is: " );
+                obj.objbank.gettallcus();
+            }
 
             boolean blopr = true;
             while(blopr){
@@ -161,6 +216,7 @@ public class Main { // for main to use as an obj we have created it as class
                     case 7: break;
 
                     case 8: {
+
                         obj.cusArray.add(cus);
                         newcus = true; // the curr cus wants to exit and new cus comes to play
                        blopr = false;

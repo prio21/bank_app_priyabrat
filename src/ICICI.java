@@ -1,11 +1,13 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ICICI implements RBI {
 
 
     HashMap<String,Float> map = new HashMap<>();
+    ArrayList<Customer> cusList = new ArrayList<>();
     BufferedReader buff;
     InputStreamReader isr;
 
@@ -109,5 +111,19 @@ public class ICICI implements RBI {
         return balance;
     }
 
+    @Override
+    public void gettallcus() {
+        for(Customer element : cusList){
+            System.out.println(element.customerName);
+        }
+    }
 
+    @Override
+    public void setCus(Customer c) {
+
+        if(!cusList.contains(c.customerAadhar) ){
+            cusList.add(c);
+        }
+
+    }
 }
