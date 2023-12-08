@@ -2,10 +2,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.String;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Main { // for main to use as an obj we have created it as class
 
+
+    ArrayList<Customer> cusArray = new ArrayList<>();
     BufferedReader buff;
     InputStreamReader isr;
     public Main() {
@@ -27,14 +30,7 @@ public class Main { // for main to use as an obj we have created it as class
 
 
 
-       Customer cus = new Customer();
-       System.out.println("Enter your name");
-        try {
-            cus.customerName = obj.buff.readLine();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        cus.setCustomerName(cus.customerName);
+
 
 
 //        ici ici = new ici(obj.buff,obj.isr);
@@ -42,13 +38,34 @@ public class Main { // for main to use as an obj we have created it as class
 
 
 
+        System.out.println("Enter your name");
 
+        Customer cus = new Customer();
 
+        try {
+            cus.customerName = obj.buff.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        cus.setCustomerName(cus.customerName);
         boolean bl = true;
+        boolean newcus = false; // check if the new cus or old
         while(bl){
 
+
+            if(newcus){
+                cus = new Customer();
+                System.out.println("Enter your name");
+                try {
+                    cus.customerName = obj.buff.readLine();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                cus.setCustomerName(cus.customerName);
+            }
+
             // this is the case for selecting the bank
-            System.out.println("Welcome to IBS\nPlease select your bank\n1. ICICI\n2. HDFC\n3. SBI\n4. AXIS\n5. IDFC");
+            System.out.println("Welcome to IBS\nPlease select your bank\n1. ICICI\n2. HDFC\n3. SBI\n4. AXIS\n5. IDFC\n see total customer");
 
             try {
                 obj.selectedBank = Integer.parseInt(obj.buff.readLine());
@@ -67,15 +84,15 @@ public class Main { // for main to use as an obj we have created it as class
                 case 2: obj.objbank = new HDFC(obj.buff,obj.isr);
                     cus.customerBankAndBalance.put("HDFC",0F);
                     break;
-
-
+                case 7: System.out.println("total customer available currently is : " + obj.cusArray.size());
+                    break;
             }
 
 
 
             boolean blopr = true;
             while(blopr){
-                System.out.println("Select your choice\n1. Deposit\n2. Withdrawl\n3. OpenFD\n4. Apply Loan\n5. Apply CC\n6. see total bank acc");
+                System.out.println("Select your choice\n1. Deposit\n2. Withdrawl\n3. OpenFD\n4. Apply Loan\n5. Apply CC\n6. see total bank acc\n7. want to open a new acc in different bank\n8. want to quit\n ");
                 try {
                     obj.selectedOperation = Integer.parseInt(obj.buff.readLine());
                 }
@@ -141,6 +158,14 @@ public class Main { // for main to use as an obj we have created it as class
                     case 6: cus.totalBank();
                         break;
 
+                    case 7: break;
+
+                    case 8: {
+                        obj.cusArray.add(cus);
+                        newcus = true; // the curr cus wants to exit and new cus comes to play
+                       blopr = false;
+                        break;
+                    }
                     default: blopr = false;
 
                 }
